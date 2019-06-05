@@ -11,12 +11,18 @@ namespace TI_AED_SO_MODII
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new FormMenu());
         }
+    }
+    public class Lista
+    {
+        public ListaCircular listaCircular;
+        public ListaEncadeada listaPronto;
+        public ListaEncadeada listaFinalizado;
     }
 }
