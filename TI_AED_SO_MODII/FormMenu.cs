@@ -73,17 +73,17 @@ namespace TI_AED_SO_MODII
         }
 
         private void ModificaPrioridade_Click(object sender, EventArgs e)
-        {
-            FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade(this.listaCircular);
-            formModificaPrioridade.ShowDialog();
-            //if (threadCicloExec.IsAlive)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
+        {            
+            if (threadCicloExec.IsAlive)
+            {
+                FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade(this.listaCircular, this.listaPronto, this.listaFinalizado);
+                formModificaPrioridade.ShowDialog();
+            }
+            else
+            {
+                FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade(this.listaCircular);
+                formModificaPrioridade.ShowDialog();
+            }
         }
 
         private void OpenForm()
