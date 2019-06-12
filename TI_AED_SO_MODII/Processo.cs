@@ -19,6 +19,7 @@ namespace TI_AED_SO_MODII
         private string nome;
         private int prioridade;
         private int quantidadeCiclo;
+        private bool executando;
 
         public Processo()
         {
@@ -26,6 +27,15 @@ namespace TI_AED_SO_MODII
             this.nome = null;
             this.prioridade = -1;
             this.quantidadeCiclo = -1;
+            this.executando = false;
+        }
+        public Processo(int id)
+        {
+            this.id = id;
+            this.nome = null;
+            this.prioridade = -1;
+            this.quantidadeCiclo = -1;
+            this.executando = false;
         }
         public Processo(Processo processo)
         {
@@ -33,6 +43,7 @@ namespace TI_AED_SO_MODII
             this.nome = processo.Nome;
             this.prioridade = processo.prioridade;
             this.quantidadeCiclo = processo.QuantidadeCiclo;
+            this.executando = false;
         }
         public Processo(int id, string nome, int prioridade, int quantidadeCiclo)
         {
@@ -40,8 +51,13 @@ namespace TI_AED_SO_MODII
             this.nome = nome;
             this.prioridade = prioridade;
             this.quantidadeCiclo = quantidadeCiclo;
+            this.executando = false;
         }
 
+        public bool Executando
+        {
+            get { return this.executando; }
+        }
         public int QuantidadeCiclo
         {
             get { return this.quantidadeCiclo; }
@@ -112,6 +128,22 @@ namespace TI_AED_SO_MODII
             {
 
                 throw;
+            }
+        }
+        public string[] DetalhesProcesso()
+        {
+            string[] texto = new string[4];
+            try
+            {
+                texto[0] = "ID: " + this.id.ToString();
+                texto[1] = "Nome: " + this.nome.ToString();
+                texto[2] = "Prioridade: " + this.prioridade.ToString();
+                texto[3] = "Qntd ciclo: " + this.quantidadeCiclo.ToString();
+                return texto;                
+            }
+            catch (System.Exception)
+            {
+                return null;
             }
         }
 

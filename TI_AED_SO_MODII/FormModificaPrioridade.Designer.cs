@@ -36,6 +36,7 @@
             this.textBoxPrioridade = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxListaProcesso = new System.Windows.Forms.TextBox();
+            this.butaoPesquisar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -54,6 +55,7 @@
             this.textBoxID.Name = "textBoxID";
             this.textBoxID.Size = new System.Drawing.Size(63, 20);
             this.textBoxID.TabIndex = 2;
+            this.textBoxID.TextChanged += new System.EventHandler(this.textBoxID_TextChanged);
             // 
             // textBoxProcesso
             // 
@@ -63,6 +65,7 @@
             this.textBoxProcesso.ReadOnly = true;
             this.textBoxProcesso.Size = new System.Drawing.Size(300, 92);
             this.textBoxProcesso.TabIndex = 3;
+            this.textBoxProcesso.Visible = false;
             // 
             // labelProcesso
             // 
@@ -73,6 +76,7 @@
             this.labelProcesso.Size = new System.Drawing.Size(132, 20);
             this.labelProcesso.TabIndex = 4;
             this.labelProcesso.Text = "Processo:";
+            this.labelProcesso.Visible = false;
             // 
             // labelPrioridade
             // 
@@ -94,6 +98,7 @@
             this.textBoxPrioridade.Size = new System.Drawing.Size(63, 20);
             this.textBoxPrioridade.TabIndex = 6;
             this.textBoxPrioridade.Visible = false;
+            this.textBoxPrioridade.TextChanged += new System.EventHandler(this.textBoxPrioridade_TextChanged);
             // 
             // label4
             // 
@@ -116,11 +121,22 @@
             this.textBoxListaProcesso.TabIndex = 8;
             this.textBoxListaProcesso.Text = " ";
             // 
+            // butaoPesquisar
+            // 
+            this.butaoPesquisar.Location = new System.Drawing.Point(126, 33);
+            this.butaoPesquisar.Name = "butaoPesquisar";
+            this.butaoPesquisar.Size = new System.Drawing.Size(72, 20);
+            this.butaoPesquisar.TabIndex = 9;
+            this.butaoPesquisar.Text = "Pesquisar";
+            this.butaoPesquisar.UseVisualStyleBackColor = true;
+            this.butaoPesquisar.Click += new System.EventHandler(this.butaoPesquisar_Click);
+            // 
             // FormModificaPrioridade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 442);
+            this.Controls.Add(this.butaoPesquisar);
             this.Controls.Add(this.textBoxListaProcesso);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxPrioridade);
@@ -146,5 +162,6 @@
         private System.Windows.Forms.TextBox textBoxPrioridade;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxListaProcesso;
+        private System.Windows.Forms.Button butaoPesquisar;
     }
 }

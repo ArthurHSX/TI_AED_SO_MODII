@@ -14,22 +14,26 @@ namespace TI_AED_SO_MODII
 {
     public partial class FormMenu : Form
     {
-        ListaCircular listaCircular;
-        ListaEncadeada listaPronto, listaFinalizado;
-        ThreadStart threadDelegate;
-        Thread threadCicloExec;
-
+        Thread tick;
+        FormCicloExecucao cicloExecucaoForm;
         public FormMenu()
-        {
-            this.listaCircular = new ListaCircular();
-            this.listaPronto = new ListaEncadeada();
-            this.listaFinalizado = new ListaEncadeada();
-            this.threadDelegate = new ThreadStart(OpenForm);
-            this.threadCicloExec = new Thread(threadDelegate);
+        {           
+            Program.listaCircular = new ListaCircular();
+            Program.listaPronto = new ListaEncadeada();
+            Program.listaFinalizado = new ListaEncadeada();
             LeituraArquivo();
             //MessageBox.Show("Trabalho Integrado AED - SO \n\n Alunos: Arthur Wesley Santos,\n //Inserir os nomes dos integrantes do grupo *********************************** ", "TI_AED_SO", MessageBoxButtons.OK);            
             InitializeComponent();
         }
+        //public FormMenu(ListaCircular listaC)
+        //{
+        //    Program.listaCircular = listaC;
+        //    Program.listaPronto = new ListaEncadeada();
+        //    Program.listaFinalizado = new ListaEncadeada();            
+        //    InitializeComponent();
+        //}
+        
+
         internal void LeituraArquivo()
         {
             try
@@ -49,7 +53,7 @@ namespace TI_AED_SO_MODII
                         {
                             split = linha.Split(';');
                             aux = new Processo(int.Parse(split[0]), split[1], int.Parse(split[2]), int.Parse(split[3]));
-                            listaCircular.Inserir(aux);
+                            Program.listaCircular.Inserir(aux);
                         }
 
                         //Proximo Elemento
@@ -63,33 +67,44 @@ namespace TI_AED_SO_MODII
         }
 
         private void IniciaCiclo_Click(object sender, EventArgs e)
-        {                      
-            threadCicloExec.Start();
-            this.SetDisplayRectLocation(0, 0);
-            if(threadCicloExec.IsAlive)
-            {
-                this.IniciaCiclo.Enabled = false;
-            }
+        {
+            cicloExecucaoForm = new FormCicloExecucao();
+            Program.threadDelegate = new ThreadStart(OpenFormCiclo);
+            tick = new Thread(Program.threadDelegate);
+            tick.Name = "Thread Ciclo Execucao";
+            tick.Start();
+            Thread.Sleep(500);
         }
 
         private void ModificaPrioridade_Click(object sender, EventArgs e)
-        {            
-            if (threadCicloExec.IsAlive)
+        {
+            MessageBox.Show("Função não implementado!!!!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade();
+            //formModificaPrioridade.ShowDialog();
+
+        }                                     
+
+        private void SuspendeResume_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Função não implementado!!!!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void Encerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OpenFormCiclo()
+        {
+            if (Application.OpenForms.OfType<FormCicloExecucao>().Count() == 1)
             {
-                FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade(this.listaCircular, this.listaPronto, this.listaFinalizado);
-                formModificaPrioridade.ShowDialog();
+                MessageBox.Show("Janela já está aberta!\nCiclo já iniciado.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                FormModificaPrioridade formModificaPrioridade = new FormModificaPrioridade(this.listaCircular);
-                formModificaPrioridade.ShowDialog();
+                cicloExecucaoForm.Show();
+                Application.Run(cicloExecucaoForm);
             }
-        }
-
-        private void OpenForm()
-        {
-            FormCicloExecucao cicloExecucao = new FormCicloExecucao(this.listaCircular, this.listaPronto, this.listaFinalizado);
-            cicloExecucao.ShowDialog();
         }
     }
 }

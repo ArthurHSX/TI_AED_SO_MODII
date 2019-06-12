@@ -29,31 +29,33 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.CPU1 = new System.Windows.Forms.TextBox();
-            this.CPU2 = new System.Windows.Forms.TextBox();
+            this.textBoxExecucaoCPU1 = new System.Windows.Forms.TextBox();
+            this.textBoxExecucaoCPU2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxListaPronto = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxListaFinalizado = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ButtonEncerrar = new System.Windows.Forms.Button();
             this.TimerCiclo = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // CPU1
+            // textBoxExecucaoCPU1
             // 
-            this.CPU1.Location = new System.Drawing.Point(30, 37);
-            this.CPU1.Name = "CPU1";
-            this.CPU1.Size = new System.Drawing.Size(320, 20);
-            this.CPU1.TabIndex = 0;
+            this.textBoxExecucaoCPU1.Location = new System.Drawing.Point(30, 37);
+            this.textBoxExecucaoCPU1.Name = "textBoxExecucaoCPU1";
+            this.textBoxExecucaoCPU1.ReadOnly = true;
+            this.textBoxExecucaoCPU1.Size = new System.Drawing.Size(320, 20);
+            this.textBoxExecucaoCPU1.TabIndex = 0;
             // 
-            // CPU2
+            // textBoxExecucaoCPU2
             // 
-            this.CPU2.Location = new System.Drawing.Point(30, 89);
-            this.CPU2.Name = "CPU2";
-            this.CPU2.Size = new System.Drawing.Size(320, 20);
-            this.CPU2.TabIndex = 1;
+            this.textBoxExecucaoCPU2.Location = new System.Drawing.Point(30, 89);
+            this.textBoxExecucaoCPU2.Name = "textBoxExecucaoCPU2";
+            this.textBoxExecucaoCPU2.ReadOnly = true;
+            this.textBoxExecucaoCPU2.Size = new System.Drawing.Size(320, 20);
+            this.textBoxExecucaoCPU2.TabIndex = 1;
             // 
             // label1
             // 
@@ -85,15 +87,15 @@
             this.textBoxListaPronto.Size = new System.Drawing.Size(324, 278);
             this.textBoxListaPronto.TabIndex = 4;
             // 
-            // textBox1
+            // textBoxListaFinalizado
             // 
-            this.textBox1.Location = new System.Drawing.Point(429, 151);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(324, 278);
-            this.textBox1.TabIndex = 5;
+            this.textBoxListaFinalizado.Location = new System.Drawing.Point(429, 151);
+            this.textBoxListaFinalizado.Multiline = true;
+            this.textBoxListaFinalizado.Name = "textBoxListaFinalizado";
+            this.textBoxListaFinalizado.ReadOnly = true;
+            this.textBoxListaFinalizado.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxListaFinalizado.Size = new System.Drawing.Size(324, 278);
+            this.textBoxListaFinalizado.TabIndex = 5;
             // 
             // label3
             // 
@@ -129,10 +131,11 @@
             // 
             // TimerCiclo
             // 
-            this.TimerCiclo.Interval = 500;
+            this.TimerCiclo.Enabled = true;
+            this.TimerCiclo.Interval = 150;
             this.TimerCiclo.Tick += new System.EventHandler(this.TimerCiclo_Tick);
             // 
-            // CicloExecucao
+            // FormCicloExecucao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -140,13 +143,13 @@
             this.Controls.Add(this.ButtonEncerrar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxListaFinalizado);
             this.Controls.Add(this.textBoxListaPronto);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.CPU2);
-            this.Controls.Add(this.CPU1);
-            this.Name = "CicloExecucao";
+            this.Controls.Add(this.textBoxExecucaoCPU2);
+            this.Controls.Add(this.textBoxExecucaoCPU1);
+            this.Name = "FormCicloExecucao";
             this.Text = "CicloExecucao";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -154,16 +157,15 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox CPU1;
-        private System.Windows.Forms.TextBox CPU2;
+        private System.Windows.Forms.TextBox textBoxExecucaoCPU2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxListaPronto;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxListaFinalizado;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ButtonEncerrar;
         private System.Windows.Forms.Timer TimerCiclo;
+        internal System.Windows.Forms.TextBox textBoxExecucaoCPU1;
     }
 }

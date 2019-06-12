@@ -66,6 +66,7 @@
             this.Encerrar.TabIndex = 2;
             this.Encerrar.Text = "Encerrar";
             this.Encerrar.UseVisualStyleBackColor = true;
+            this.Encerrar.Click += new System.EventHandler(this.Encerrar_Click);
             // 
             // SuspendeResume
             // 
@@ -76,6 +77,7 @@
             this.SuspendeResume.TabIndex = 3;
             this.SuspendeResume.Text = "Suspender ou resumir";
             this.SuspendeResume.UseVisualStyleBackColor = true;
+            this.SuspendeResume.Click += new System.EventHandler(this.SuspendeResume_Click);
             // 
             // FormMenu
             // 

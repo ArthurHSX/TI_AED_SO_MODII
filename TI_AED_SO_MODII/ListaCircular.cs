@@ -85,6 +85,27 @@ namespace TI_AED_SO_MODII
             }
         }
 
+        public Processo Busca(Processo busca)
+        {
+            Elemento aux = this.atual.Anterior;            
+            try
+            {
+                while (aux != null)
+                {
+                    if(aux.DadoProcesso().Id == busca.Id)
+                    {
+                        return aux.DadoProcesso();
+                    }
+                    aux = aux.Anterior;
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public bool Vazia()
         {
             if (this.atual.Anterior == this.atual)

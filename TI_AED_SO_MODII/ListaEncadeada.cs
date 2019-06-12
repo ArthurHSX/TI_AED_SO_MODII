@@ -225,5 +225,30 @@ namespace TI_AED_SO_MODII
                 return "";
             }
         }
+        public string[] String()
+        {
+            try
+            {
+                Elemento aux = this.primeiro.Proximo;
+                string[] texto = new string[count];
+                int cont = 0;
+                if (this.Vazia())
+                    return null;
+                else
+                {
+                    do
+                    {
+                        texto[cont] = aux.DadoProcesso().ToString();
+                        aux = aux.Proximo;
+                    } while (aux != null);
+                    return texto;
+                }
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show("Erro na Lista Encadeada (ToString). {0} \n", e.ToString(), MessageBoxButtons.OK);
+                return null;
+            }
+        }
     }
 }
