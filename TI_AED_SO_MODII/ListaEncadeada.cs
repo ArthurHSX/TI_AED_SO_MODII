@@ -99,7 +99,7 @@ namespace TI_AED_SO_MODII
                 Elemento aux = this.Busca(new Elemento(processo));
                 Elemento auxRetirada = new Elemento();
                 if (aux == null)
-                { throw new Exception(); }
+                { }
                 if (aux.Proximo != null)
                 {
                     auxRetirada = aux.Proximo;
@@ -145,11 +145,11 @@ namespace TI_AED_SO_MODII
             try
             {
                 Elemento percorre = this.primeiro;
-                Processo aux = null;
+                Processo aux = new Processo();
 
                 while (percorre.Proximo != null)
                 {
-                    if (percorre.Proximo.DadoProcesso().Prioridade > processo.Prioridade)
+                    if (percorre.Proximo.DadoProcesso().Prioridade > aux.Prioridade)
                         aux = percorre.Proximo.DadoProcesso();
 
                     percorre = percorre.Proximo;
@@ -166,24 +166,7 @@ namespace TI_AED_SO_MODII
         public bool Vazia()
         {
             return (this.primeiro.Proximo == null);
-        }
-
-        //public Dado Consultimoa_indice(int pos)
-        //{
-        //    if (this.vazia()) return null;
-
-        //    int i = 0;
-        //    Elemento aux = this.primeiro;
-
-        //    while (aux != null && i < pos)
-        //    {
-        //        aux = aux.Proximo;
-        //        i++;
-        //    }
-
-        //    if (aux == null) return null;
-        //    else return aux.Meudado();
-        //}
+        }        
 
         public void Concatenar(ListaEncadeada outra)
         {
@@ -208,12 +191,13 @@ namespace TI_AED_SO_MODII
                 Elemento aux = this.primeiro.Proximo;
                 string texto = null;
                 if (this.Vazia())
-                    return "Lista vazia.";
+                    return null;
                 else
                 {
                     do
                     {
-                        texto = texto + aux.DadoProcesso().ToString() + '\n';
+                        texto = texto + string.Format(aux.DadoProcesso().ToString()+ "{0}", Environment.NewLine);
+                        //texto = texto + aux.DadoProcesso().ToString() + "\n";
                         aux = aux.Proximo;
                     } while (aux != null);
                     return texto;
@@ -224,31 +208,8 @@ namespace TI_AED_SO_MODII
                 MessageBox.Show("Erro na Lista Encadeada (ToString). {0} \n", e.ToString(), MessageBoxButtons.OK);
                 return "";
             }
-        }
-        public string[] String()
-        {
-            try
-            {
-                Elemento aux = this.primeiro.Proximo;
-                string[] texto = new string[count];
-                int cont = 0;
-                if (this.Vazia())
-                    return null;
-                else
-                {
-                    do
-                    {
-                        texto[cont] = aux.DadoProcesso().ToString();
-                        aux = aux.Proximo;
-                    } while (aux != null);
-                    return texto;
-                }
-            }
-            catch (System.Exception e)
-            {
-                MessageBox.Show("Erro na Lista Encadeada (ToString). {0} \n", e.ToString(), MessageBoxButtons.OK);
-                return null;
-            }
-        }
+        }        
+
+        
     }
 }

@@ -13,7 +13,7 @@ namespace TI_AED_SO_MODII
 {
     public partial class FormCicloExecucao : Form
     {
-        private delegate void DelegateChamadaSeguraTexto(string texto);
+        private delegate void DelegateChamadaSeguraTextBox(string texto);
         private delegate void DelegateChamadaSegura();
         Processo executandoCPU1;
         Processo executandoCPU2;
@@ -24,34 +24,14 @@ namespace TI_AED_SO_MODII
 
         public FormCicloExecucao()
         {
-            InitializeComponent();
-            //Program.threadDelegate = new ThreadStart(TimerCiclo.Start);
-            //this.tick = new Thread(Program.threadDelegate);
-            //this.tick.Name = "Tick";
-            //this.tick.Start();
-            //this.TimerCiclo.Enabled = true;
-            textBoxExecucaoCPU1.Text = "Iniciando...";
-            textBoxExecucaoCPU2.Text = "Iniciando...";
-            textBoxListaPronto.Text = "Inicicando...";
-            textBoxListaFinalizado.Text = "Inicicando...";                                    
+            InitializeComponent();                                              
             this.executandoCPU1 = new Processo();
             this.executandoCPU2 = new Processo();
             Program.cicloExecutando = true;            
         }
 
         private void TimerCiclo_Tick(object sender, EventArgs e)
-        {            
-            if(mutex == null)
-            {
-                this.mutex = new Mutex();
-                Program.threadDelegate = new ThreadStart(Inicio);
-                this.CPU1 = new Thread(Program.threadDelegate);
-                this.CPU2 = new Thread(Program.threadDelegate);
-                this.CPU1.Name = "CPU1";
-                this.CPU2.Name = "CPU2";
-                this.CPU1.Start();
-                //this.CPU2.Start();
-            }
+        {                        
             try
             {                               
                 Program.listaPronto.Inserir(Program.listaCircular.Retirar());
@@ -67,6 +47,21 @@ namespace TI_AED_SO_MODII
                 CPU2.Suspend();
                 EncerrarForm();
             }
+            if (mutex == null)
+            {
+                this.mutex = new Mutex();
+                Program.threadDelegate = new ThreadStart(Inicio);
+                this.CPU1 = new Thread(Program.threadDelegate);
+                this.CPU2 = new Thread(Program.threadDelegate);
+                this.CPU1.Name = "CPU1";
+                this.CPU2.Name = "CPU2";
+                this.CPU1.Start();
+                //this.CPU2.Start();
+            }
+            //if (CPU1.IsAlive== false)
+            //{ CPU1.Start(); }
+            //if (CPU2.IsAlive == false)
+            //{ CPU2.Start(); }
         }
 
         public void Inicio()
@@ -75,23 +70,23 @@ namespace TI_AED_SO_MODII
                 AlocaProcesso(ref executandoCPU1);
             else if (Thread.CurrentThread.Name == "CPU2")
                 AlocaProcesso(ref executandoCPU2);
-            else
-            {
-                TimerCiclo_Tick(true, EventArgs.Empty);
-            }
+            //else
+            //{
+            //    TimerCiclo_Tick(true, EventArgs.Empty);
+            //}
         }
 
         private void Ciclo(ref Processo processo)
         {
             Processo aux = new Processo();
             string linha = null;
-            int quantum = processo.QuantidadeCiclo * 100;
-
-            while (quantum == 0)
+            int quantum = processo.QuantidadeCiclo;
+            do
             {
                 Thread.Sleep(100);
-                quantum = quantum - 100;
-                processo.Descontar(quantum / 100);
+                quantum = quantum - 1;
+                processo.Descontar(1);
+                AtualizarForm();
                 if (Thread.CurrentThread.Name == "CPU1")
                 {
                     AdicionarItemTextBoxCPU1(processo.ToString());
@@ -100,39 +95,47 @@ namespace TI_AED_SO_MODII
                 {
                     AdicionarItemTextBoxCPU2(processo.ToString());
                 }
-                if(processo.QuantidadeCiclo == 0)
+                if (processo.QuantidadeCiclo == 0)
                 {
                     ProcessoFinalizado(processo);
-                    processo = new Processo(-1,null,-1,-1);
+                    processo = new Processo(-1, null, -1, -1);
                     AlocaProcesso(ref processo);
                 }
                 else
                 {
                     if (Thread.CurrentThread.Name == "CPU1")
                     {
-                        linha = textBoxExecucaoCPU1.ToString();
+                        aux = executandoCPU1;
                     }
                     else if (Thread.CurrentThread.Name == "CPU2")
                     {
-                        linha = textBoxExecucaoCPU2.ToString();
-                    }
-
-                    string[] split;
-                    split = linha.Split(';');
-
-                    aux = new Processo(int.Parse(split[0]), split[1], int.Parse(split[2]), int.Parse(split[3]));                    
+                        aux = executandoCPU2;
+                    }  
+                    
                     aux = ComparaPrioridade(aux);
+
                     if (aux != null)
                     {
                         TrocaContexto(aux, ref processo);
+                        if (Thread.CurrentThread.Name == "CPU1")
+                        {
+                            AdicionarItemTextBoxCPU1(processo.ToString());
+                        }
+                        else if (Thread.CurrentThread.Name == "CPU2")
+                        {
+                            AdicionarItemTextBoxCPU2(processo.ToString());
+                        }                        
                     }
+
                 }
-            }
+            } while (quantum != 0);            
         }
 
         private void TrocaContexto(Processo novo, ref Processo processo)
         {
+            mutex.WaitOne();
             processo = novo;
+            mutex.ReleaseMutex();
         }
 
         private void ProcessoFinalizado(Processo processo)
@@ -178,6 +181,7 @@ namespace TI_AED_SO_MODII
             {
                 executando = Program.listaPronto.ComparaPrioridade(executando);
                 Program.listaPronto.BuscaRetira(executando);
+                AtualizarForm();
                 if (Thread.CurrentThread.Name == "CPU1")
                 { AdicionarItemTextBoxCPU1(executando.ToString()); }
                 else if (Thread.CurrentThread.Name == "CPU2")
@@ -206,44 +210,60 @@ namespace TI_AED_SO_MODII
         {
             if(textBoxExecucaoCPU1.InvokeRequired)
             {
-                Invoke(new DelegateChamadaSeguraTexto(AdicionarItemTextBoxCPU1), new object[] { texto});
+                Invoke(new DelegateChamadaSeguraTextBox(AdicionarItemTextBoxCPU1), new object[] { texto});
             }
             else
             {
-                textBoxExecucaoCPU1.Text = texto;
+                if (texto != null)
+                {
+                    textBoxExecucaoCPU1.Text = texto;
+                    this.Refresh();
+                }
             }
         }
         private void AdicionarItemTextBoxCPU2(string texto)
         {
             if (textBoxExecucaoCPU2.InvokeRequired)
             {
-                Invoke(new DelegateChamadaSeguraTexto(AdicionarItemTextBoxCPU2), new object[] { texto });
+                Invoke(new DelegateChamadaSeguraTextBox(AdicionarItemTextBoxCPU2), new object[] { texto });
             }
             else
             {
-                textBoxExecucaoCPU2.Text = texto;
+                if (texto != null)
+                {
+                    textBoxExecucaoCPU2.Text = texto;
+                    this.Refresh();
+                }
             }
         }
         private void AdicionarItemTextBoxPronto(string texto)
         {
             if (textBoxListaPronto.InvokeRequired)
             {
-                Invoke(new DelegateChamadaSeguraTexto(AdicionarItemTextBoxPronto), new object[] { texto });
+                Invoke(new DelegateChamadaSeguraTextBox(AdicionarItemTextBoxPronto), new object[] { texto });
             }
             else
             {
-                textBoxListaPronto.Text = texto;
+                if (texto != null)
+                {
+                    textBoxListaPronto.Text = texto;
+                }
+                this.Refresh();
             }
         }
         private void AdicionarItemTextBoxFinalizado(string texto)
         {
             if (textBoxListaFinalizado.InvokeRequired)
             {
-                Invoke(new DelegateChamadaSeguraTexto(AdicionarItemTextBoxFinalizado), new object[] { texto });
+                Invoke(new DelegateChamadaSeguraTextBox(AdicionarItemTextBoxFinalizado), new object[] { texto });
             }
             else
             {
-                textBoxListaFinalizado.Text = texto;
+                if (texto != null)
+                {
+                    textBoxListaFinalizado.Text = texto;
+                }
+                this.Refresh();
             }
         }
         private void AtualizarForm()
@@ -255,6 +275,10 @@ namespace TI_AED_SO_MODII
             else
             {
                 this.Refresh();
+                this.textBoxExecucaoCPU1.Refresh();
+                this.textBoxExecucaoCPU2.Refresh();
+                this.textBoxListaPronto.Refresh();
+                this.textBoxListaFinalizado.Refresh();                
             }
 
         }

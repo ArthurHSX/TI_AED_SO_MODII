@@ -34,11 +34,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxListaPronto = new System.Windows.Forms.TextBox();
-            this.textBoxListaFinalizado = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ButtonEncerrar = new System.Windows.Forms.Button();
             this.TimerCiclo = new System.Windows.Forms.Timer(this.components);
+            this.textBoxListaFinalizado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBoxExecucaoCPU1
@@ -87,16 +87,6 @@
             this.textBoxListaPronto.Size = new System.Drawing.Size(324, 278);
             this.textBoxListaPronto.TabIndex = 4;
             // 
-            // textBoxListaFinalizado
-            // 
-            this.textBoxListaFinalizado.Location = new System.Drawing.Point(429, 151);
-            this.textBoxListaFinalizado.Multiline = true;
-            this.textBoxListaFinalizado.Name = "textBoxListaFinalizado";
-            this.textBoxListaFinalizado.ReadOnly = true;
-            this.textBoxListaFinalizado.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxListaFinalizado.Size = new System.Drawing.Size(324, 278);
-            this.textBoxListaFinalizado.TabIndex = 5;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -132,8 +122,18 @@
             // TimerCiclo
             // 
             this.TimerCiclo.Enabled = true;
-            this.TimerCiclo.Interval = 150;
+            this.TimerCiclo.Interval = 1000;
             this.TimerCiclo.Tick += new System.EventHandler(this.TimerCiclo_Tick);
+            // 
+            // textBoxListaFinalizado
+            // 
+            this.textBoxListaFinalizado.Location = new System.Drawing.Point(429, 151);
+            this.textBoxListaFinalizado.Multiline = true;
+            this.textBoxListaFinalizado.Name = "textBoxListaFinalizado";
+            this.textBoxListaFinalizado.ReadOnly = true;
+            this.textBoxListaFinalizado.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxListaFinalizado.Size = new System.Drawing.Size(324, 278);
+            this.textBoxListaFinalizado.TabIndex = 5;
             // 
             // FormCicloExecucao
             // 
@@ -161,11 +161,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxListaPronto;
-        private System.Windows.Forms.TextBox textBoxListaFinalizado;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ButtonEncerrar;
         private System.Windows.Forms.Timer TimerCiclo;
         internal System.Windows.Forms.TextBox textBoxExecucaoCPU1;
+        private System.Windows.Forms.TextBox textBoxListaFinalizado;
     }
 }

@@ -10,6 +10,9 @@ namespace TI_AED_SO_MODII
     /*  Trabalho Integrado Algoritimo Estrutura de Dados e Sistemas Operacionais
      *  Programadore(s): 
      *  Arthur Wesley Santos
+     *  Matheus Rógeres
+     *  Norton de Souza
+     *  David Richard
      *  
     */
 

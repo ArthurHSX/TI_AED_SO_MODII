@@ -22,7 +22,7 @@ namespace TI_AED_SO_MODII
             Program.listaPronto = new ListaEncadeada();
             Program.listaFinalizado = new ListaEncadeada();
             LeituraArquivo();
-            //MessageBox.Show("Trabalho Integrado AED - SO \n\n Alunos: Arthur Wesley Santos,\n //Inserir os nomes dos integrantes do grupo *********************************** ", "TI_AED_SO", MessageBoxButtons.OK);            
+            MessageBox.Show("Trabalho Integrado AED - SO \n\n Alunos: Arthur Wesley Santos,\nDavid Richard\nMatheus Rógeres\nNorton de Souza", "TI_AED_SO", MessageBoxButtons.OK);
             InitializeComponent();
         }
         //public FormMenu(ListaCircular listaC)
@@ -104,6 +104,7 @@ namespace TI_AED_SO_MODII
             {
                 cicloExecucaoForm.Show();
                 Application.Run(cicloExecucaoForm);
+                
             }
         }
     }
